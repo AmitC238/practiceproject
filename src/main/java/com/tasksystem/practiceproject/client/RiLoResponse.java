@@ -24,16 +24,17 @@ public class RiLoResponse {
 
     private final OkHttpClient okHttpClient;
     private final ObjectMapper objectMapper;
+
+    private final RiloAccessTicketResponseValidation responseValidation;
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    private final RiloAccessTicketResponseValidation riloAccessTicketResponseValidation;
 
 
 
-    public RiLoResponse(OkHttpClient okHttpClient, ObjectMapper objectMapper, RiloAccessTicketResponseValidation riloAccessTicketResponseValidation) {
+    public RiLoResponse(OkHttpClient okHttpClient, ObjectMapper objectMapper, RiloAccessTicketResponseValidation responseValidation) {
         this.okHttpClient = okHttpClient;
         this.objectMapper = objectMapper;
-        this.riloAccessTicketResponseValidation = riloAccessTicketResponseValidation;
+        this.responseValidation = responseValidation;
     }
 
     public RiLoResponseData getAccessTickets(String householdId) throws IOException, RiLoResponseException {
@@ -82,7 +83,7 @@ public class RiLoResponse {
             throw new RiLoResponseException(RILO_DOWNSTREAM_FAILURE);
         }
 
-        if(riloAccessTicketResponseValidation.validateRiloAccessTicketResponse(riloResponse.getAccessTicket())) {
+        if(responseValidation.validateRiloAccessTicketResponse(riloResponse.getAccessTicket())) {
             logger.info("parse successful");
             return riloResponse;
         } else {
