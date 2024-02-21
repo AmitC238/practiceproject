@@ -1,7 +1,6 @@
 package com.tasksystem.practiceproject.model;
 
 import java.time.Instant;
-import java.util.Date;
 import java.util.UUID;
 
 public class AccessTicket {
@@ -15,6 +14,7 @@ public class AccessTicket {
     private String productStaticId;
 
     public AccessTicket(UUID id, String name, Instant startDate, Instant endDate, String productEventId, String productId, String productStaticId){
+        
         this.id = id;
         this.name = name;
         this.startDate = startDate;
@@ -22,6 +22,7 @@ public class AccessTicket {
         this.productEventId = productEventId;
         this.productId = productId;
         this.productStaticId = productStaticId;
+    
 
     }
 
