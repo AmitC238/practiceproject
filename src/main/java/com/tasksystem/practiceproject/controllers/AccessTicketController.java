@@ -1,8 +1,7 @@
 package com.tasksystem.practiceproject.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.tasksystem.practiceproject.client.RiLoResponseException;
 import com.tasksystem.practiceproject.service.UUIDService;
+import com.tasksystem.practiceproject.Exceptions.RiLoResponseException;
 import com.tasksystem.practiceproject.client.RiLoResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,20 +25,20 @@ public class AccessTicketController {
     }
 
     @GetMapping("/{householdId}")
-    public ResponseEntity<String> getAccessTickets(@RequestHeader(name = "x-sky-request-id", required = false) String xSkyRequestId) throws IOException, RiLoResponseException
+    public ResponseEntity<String> getAccessTickets(@RequestHeader(name = "x-sky-request-id", required = false) String xSkyRequestId) throws RiLoResponseException, IOException
     {
         HttpHeaders responseHeaders = new HttpHeaders();
 
         UUID requestId = uuidService.getUUID(xSkyRequestId);
         responseHeaders.set("x-sky-request-id", String.valueOf(requestId));
         String responseBody = null;
-        try {
-            responseBody = riLoResponse.getAccessTickets("1").accessTickets.toString();
-        } catch (IOException e) {
-            throw new RiLoResponseException(e);
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body("Failed/Error 500");
-        }
+        // try {
+        responseBody = riLoResponse.getAccessTickets("1").accessTickets.toString();
+        // } catch (RiLoResponseException e) {
+        //     throw e;
+        //    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        //            .body("Failed/Error 500");
+        // }
 
         return ResponseEntity.ok()
                 .headers(responseHeaders)

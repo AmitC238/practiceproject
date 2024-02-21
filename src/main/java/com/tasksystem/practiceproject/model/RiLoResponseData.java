@@ -5,6 +5,8 @@ import java.util.List;
 public class RiLoResponseData {
 
     public List<AccessTicket> accessTickets = new ArrayList<>();
+
+    
     public List<AccessTicket> getAccessTicket() {
         return accessTickets;
     }
